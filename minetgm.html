@@ -19,8 +19,8 @@ var secretColors = []; // number -> associated color
 var colorKnowledge = []; // color# (from secretColors) -> set of possible numbers
 var sets = []; // [color#, number (-1 if not certain), set of cells]
 var colorRestriction = 2; // 0 = none, 1 = random, 2 = blind
-var FIRST_TORIKAN = 180000; // PB 93.370 (9.515, 26.825, 41.665, 65.101, 93.370)
-var SECOND_TORIKAN = 500000; // PB 315.315
+var FIRST_TORIKAN = 18000000; // PB 93.370 (9.515, 26.825, 41.665, 65.101, 93.370)
+var SECOND_TORIKAN = 50000000; // PB 315.315
 
 var playing = false;
 var needOpen = 0;
@@ -50,7 +50,7 @@ function init() {
  m = 40;
  startTime = new Date();
  document.bgColor = "#ccc";
- 
+
  c = $('c').getContext('2d');
  $('c').height = cheight;
  $('c').width = cwidth;
@@ -58,7 +58,7 @@ function init() {
  $('cube').width = cwidth;
  $('c').addEventListener("mousedown", clicked, false);
  $('c').addEventListener("mouseup", clickup, false);
- 
+
  level = -1;
  splits = [];
  nextLevel(-1,-1);
@@ -90,21 +90,21 @@ function nextLevel(y, x) {
   init();
   return;
  }
- 
+
  m = levelTypes[level][0];
  allowFlags = levelTypes[level][1];
  showNumbers = levelTypes[level][2];
  colorRestriction = levelTypes[level][3];
- 
+
  console.log("Level " + level);
  $('data').innerHTML = "Level: " + level + "<br>Mines: " + m + "<br>Flags: " + (allowFlags ? "yes" : "no") + "<br>Numbers: " + (showNumbers ? "yes" : "no") + "<br>Colors: " + (colorRestriction == 0 ? "normal" : (colorRestriction == 1 ? "random" : "no"));
- 
+
  if (x==-1 && y==-1) {
   x = Math.floor(Math.random()*w);
   y = Math.floor(Math.random()*h);
  }
  generateBoard(x, y);
- 
+
  needOpen = h*w - m;
  initBoardKnowledge();
  openSquare(y,x);
@@ -132,7 +132,7 @@ function stringBoard() {
 function generateBoard(x,y) {
  //while (true) {
   //h=16;w=16;m=60; // TEMP
- 
+
   board=[];boardKnowledge=[];secretColors=[];colorKnowledge=[];sets=[];
   // determine basics
   tryGenerateBoard(y,x);
@@ -148,7 +148,7 @@ function generateBoard(x,y) {
 
     // use logic to figure stuff out
     useLogic();
-   
+
     if (!isSolvable()) {
      perturb(y,x);
   	//console.log(stringBoard());
@@ -158,7 +158,7 @@ function generateBoard(x,y) {
     return;
     }
    }
-  
+
    console.log("Failed at " + i + " perturbs");
    alert(isSolvable()); // TEMP
   }
@@ -381,7 +381,7 @@ function useLogic() {
     sets.splice(i, 1);
 	continue;
    }
-   
+
    var opened = 0, flagged = 0, unknown = 0;
    for (var j=0; j<cells.length; j++) {
     if (boardKnowledge[cells[j][0]][cells[j][1]] == 0) {
@@ -464,7 +464,7 @@ function useLogic() {
 	 if (intersection.length == 0) continue;
 	 var iMinusj = setMinus(sets[i][2], sets[j][2]);
 	 var jMinusi = setMinus(sets[j][2], sets[i][2]);
- 	
+
 	 // if i and j are the same set
 	 if (iMinusj.length == 0 && jMinusi.length == 0) {
  	 if (sets[i][1] == -1) sets[i][1] = sets[j][1]; // take number info from j
@@ -579,14 +579,14 @@ function useLogic() {
    }
   }
 	// todo: more complex colors, etc.
-  
+
     // new logic
     //[4,1,[[6,26],[7,26]]]
     //[11,-1,[[6,26],[7,26],[8,26],[8,28]]]
     //11 = [3,4]
     // => 11 = [3], [8,26] and [8,28] are mines
-	
-	
+
+
 	// something goes wrong with random colors! the //WAT comments signify testing
 	// I saw a thingy with a -2 clue. maybe that is part of the problem, not treating -1 clues properly. is it related to the thing about two equal colors?
  }
@@ -658,7 +658,7 @@ function perturb(starty, startx) {
  // console.log(set_index);
  //}
  var set_cells = sets[set_index][2];
- 
+
  // Make a list of all the squares in the grid, in this order:
  // - first, unknown squares on the boundary of known space
  // - next, unknown squares beyond that boundary
@@ -698,7 +698,7 @@ function perturb(starty, startx) {
  shuffle(known);
  var combinedSquares = unknownInBoundary.concat(unknownBeyondBoundary).concat(known);
  //console.log(JSON.stringify(combinedSquares));
- 
+
  // Count the number of full and empty squares in the perturbing set.
  var nfull = 0, nempty = 0;
  for (var i=0; i<set_cells.length; i++) {
@@ -709,7 +709,7 @@ function perturb(starty, startx) {
   }
  }
  //console.log(nfull + ", " + nempty);
- 
+
  // Go through the squares list until we find either 'nfull' empty squares or 'nempty' full squares
  var squarePtr = 0, nemptyList = 0, nfullList = 0;
  for (squarePtr=0; squarePtr<combinedSquares.length; squarePtr++) {
@@ -722,7 +722,7 @@ function perturb(starty, startx) {
    break;
   }
  }
- 
+
  // If we couldn't find enough...
  if (squarePtr == combinedSquares.length) {
   // Randomly fill a random selection of our perturbing set from the empty squares
@@ -954,7 +954,7 @@ function getBrowser() {
     return data[i].identity;
   }
  };
- 
+
  return searchString(dataBrowser) || "An unknown browser";
 }
 // -->
