@@ -173,9 +173,9 @@ vueApp = new Vue({
             $('c').addEventListener("mousedown", this.clicked, false);
             $('c').addEventListener("mouseup", this.mouseup, false);
             $('c').addEventListener("mousemove", this.mouseover, false);
-            
-            this.level = -1;
-            this.levelName = "LEVEL 1";
+
+            this.level = 3;
+            this.levelName = "LEVEL 4";
             this.splits = [];
             this.grade = "";
             this.gameOverMessage = "";

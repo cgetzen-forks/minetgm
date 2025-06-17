@@ -185,7 +185,7 @@ vueApp = new Vue({
             $('c').addEventListener("touchstart", this.clicked, false);
             $('c').addEventListener("mousedown", this.clicked, false);
             
-            this.level = -1;
+            this.level = 3;
             this.levelName = "LEVEL 1";
             this.splits = [];
             this.grade = "";
