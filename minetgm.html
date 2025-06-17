@@ -59,16 +59,16 @@ function init() {
  $('c').addEventListener("mousedown", clicked, false);
  $('c').addEventListener("mouseup", clickup, false);
 
- level = -1;
+ level = 4;
  splits = [];
  nextLevel(-1,-1);
 }
 
 // Mines, flags, numbers, color restriction
 var levelTypes = [
-	//[30, true, true, 0],
-	//[40, true, true, 0],
-	//[40, false, true, 0],
+	[30, true, true, 0],
+	[40, true, true, 0],
+	[40, false, true, 0],
 	[40, false, false, 0],
 	[40, false, false, 1],
 	[52, true, true, 0],
